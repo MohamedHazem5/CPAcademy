@@ -1,7 +1,7 @@
 ﻿
 namespace CPAcademy.Models
 {
-    public class Articles
+    public class Article
     {
         public int Id { get; set; }
         public string Content { get; set; }

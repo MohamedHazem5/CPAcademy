@@ -1,7 +1,7 @@
 ﻿
 namespace CPAcademy.Models
 {
-    public class Interst
+    public class Interest
     {
         public int Id { get; set; }
         public int Title { get; set; }
