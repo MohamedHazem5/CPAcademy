@@ -3,7 +3,7 @@
 
 namespace CPAcademy.Models
 {
-    public class Theme
+    public class Category
     {
         [Key]
         public int Id { get; set; }

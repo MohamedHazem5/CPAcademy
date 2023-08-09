@@ -21,10 +21,10 @@ namespace CPAcademy.Models
         public double ListPrice { get; set; }
         public DateTime CDate { get; set; }
         public DateTime LastUpdated { get; set; }
-        public int ThemeId { get; set; }
-        public Theme Theme { get; set; }
-        public int TypeId { get; set; }
-        public Type Type { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+        public int TopicId { get; set; }
+        public Topic Topic { get; set; }
         public int InstructorId { get; set; }
         public User Instructor { get; set; }
 

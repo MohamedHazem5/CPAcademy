@@ -3,7 +3,7 @@
 
 namespace CPAcademy.Models
 {
-    public class Type
+    public class Topic
     {
         [Key]
         public int Id { get; set; }
