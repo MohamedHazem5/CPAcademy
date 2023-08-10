@@ -31,14 +31,19 @@ namespace CPAcademy.DataAccess.Repository
         }
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] includeProperties)
         {
-            var query = filter != null ? _dbSet.AsQueryable().Where(filter) : _dbSet.AsQueryable();
-            query = includeProperties != null ? includeProperties.Aggregate(query, (record, property) => record.Include(property)) : query;
+            var query = filter != null ? _dbSet.Where(filter) : _dbSet;
+
+            if(includeProperties != null)
+                query = includeProperties.Aggregate(query, (record, property) => record.Include(property));
             return await query.ToListAsync();
         }
         public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] includeProperties)
         {
-            var query = filter != null ? _dbSet.AsQueryable().Where(filter) : _dbSet.AsQueryable();
-            query = includeProperties != null ? includeProperties.Aggregate(query ,(record, property) => record.Include(property)) : query;
+            var query = filter != null ? _dbSet.Where(filter) : _dbSet;
+
+            if (includeProperties != null)
+                query = includeProperties.Aggregate(query ,(record, property) => record.Include(property));
+
             return await query.FirstOrDefaultAsync();
         }
     
