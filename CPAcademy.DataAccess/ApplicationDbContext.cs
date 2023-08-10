@@ -10,6 +10,39 @@ namespace CPAcademy.DataAccess
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Certificate>()
+            .HasOne(x => x.Learner)
+             .WithMany()
+             .HasForeignKey(x => x.LearnerId)
+             .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Enroll>()
+                .HasOne(x => x.Learner)
+                 .WithMany()
+                 .HasForeignKey(x => x.LearnerId)
+                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Review>()
+                    .HasOne(x => x.Learner)
+                     .WithMany()
+                     .HasForeignKey(x => x.LearnerId)
+                     .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Discussion>()
+                    .HasOne(x => x.Learner)
+                     .WithMany()
+                     .HasForeignKey(x => x.LearnerId)
+                     .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Note>()
+                    .HasOne(x => x.Learner)
+                     .WithMany()
+                     .HasForeignKey(x => x.LearnerId)
+                     .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Progress>()
+                    .HasOne(x => x.Learner)
+                        .WithMany()
+                        .HasForeignKey(x => x.LearnerId)
+                        .OnDelete(DeleteBehavior.NoAction);
+        }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
