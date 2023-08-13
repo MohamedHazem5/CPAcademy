@@ -2,33 +2,33 @@ namespace CPAcademy.DataAccess.Repository.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {
-        IArticleRepository ArticleRepository { get; }
-        IBlogRepository BlogRepository { get; }
-        ICategoryRepository CategoryRepository { get; }
-        ICertificateRepository CertificateRepository{ get; }
-        IChoiceRepository ChoiceRepository { get; }
-        IContentRepository ContentRepository { get; }
-        ICourseRepository CourseRepository { get; }
-        IDiscussionRepository DiscussionRepository { get; }
-        IEnrollRepository EnrollRepository { get; }
-        IEventRepository EventRepository { get; }
-        IInterestRepository InterestRepository{ get; }
-        ILearnerInterestRepository LearnerInterestRepository{ get; }
-        ILectuteRepository LectuteRepository { get; }
-        IMailRepository MailRepository { get; }
-        INewsRepository NewsRepository { get; }
-        INoteRepository NoteRepository { get; }
-        IProgressRepository ProgressRepository { get; }
-        IQuestionRepository QuestionRepository { get; }
-        IQuizRepository QuizRepository { get; }
-        IReviewRepository ReviewRepository { get; }
-        ISectionRepository SectionRepository { get; }
-        ISkillCourseRepository SkillCourseRepository { get; }
-        ISkillRepository SkillRepository { get; }
-        ISubscriptionRepository SubscriptionRepository { get; }
-        ITopicRepository TopicRepository { get; }
-        IUserRepository UserRepository { get; }
-        IVideoRepository VideoRepository { get; }
+        IArticleRepository Article { get; }
+        IBlogRepository Blog { get; }
+        ICategoryRepository Category { get; }
+        ICertificateRepository Certificate{ get; }
+        IChoiceRepository Choice { get; }
+        IContentRepository Content { get; }
+        ICourseRepository Course { get; }
+        IDiscussionRepository Discussion { get; }
+        IEnrollRepository Enroll { get; }
+        IEventRepository Event { get; }
+        IInterestRepository Interest{ get; }
+        ILearnerInterestRepository LearnerInterest{ get; }
+        ILectuteRepository Lectute { get; }
+        IMailRepository Mail { get; }
+        INewsRepository News { get; }
+        INoteRepository Note { get; }
+        IProgressRepository Progress { get; }
+        IQuestionRepository Question { get; }
+        IQuizRepository Quiz { get; }
+        IReviewRepository Review { get; }
+        ISectionRepository Section { get; }
+        ISkillCourseRepository SkillCourse { get; }
+        ISkillRepository Skill { get; }
+        ISubscriptionRepository Subscription { get; }
+        ITopicRepository Topic { get; }
+        IUserRepository User { get; }
+        IVideoRepository Video { get; }
 
         Task<int> Save();
         
