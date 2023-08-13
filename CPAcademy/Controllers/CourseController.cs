@@ -18,9 +18,9 @@ namespace CPAcademy.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> Index(){
+/*        public async Task<IActionResult> Index(){
             var result = await _unitOfWork.Course.GetAllAsync();
             return Ok(result);
-        }
+        }*/
     }
 }
