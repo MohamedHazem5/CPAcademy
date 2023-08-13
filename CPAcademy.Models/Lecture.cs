@@ -13,5 +13,8 @@ namespace CPAcademy.Models
         public int Order { get; set; } // Just for Ordering
         public int SectionId { get; set; }
         public Section Section { get; set; }
+        public ICollection<Discussion> Discussions { get; set; }
+        public ICollection<Note> Notes { get; set; }
+        public ICollection<Progress> Progresses { get; set; }
     }
 }

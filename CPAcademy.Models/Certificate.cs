@@ -9,9 +9,7 @@ namespace CPAcademy.Models
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public string Url { get; set; }
-        public int CourseId { get; set; }
         public Course Course { get; set; }
-        public int LearnerId { get; set; }
         public User Learner { get; set; }
     }
 }
