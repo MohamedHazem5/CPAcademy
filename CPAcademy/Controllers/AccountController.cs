@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using CPAcademy.Models;
+using CPAcademy.Models.DTOs;
+using CPAcademy.Services.IServices;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CPAcademy.Controllers
@@ -7,5 +12,69 @@ namespace CPAcademy.Controllers
     [ApiController]
     public class AccountController : BaseAPIController
     {
+        private readonly UserManager<User> _userManager;
+        private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
+
+        public AccountController(UserManager<User> userManager, ITokenService tokenService, IMapper mapper)
+        {
+            _userManager = userManager;
+            _mapper = mapper;
+            _tokenService = tokenService;
+        }
+
+        [HttpPost("register")] // POST: api/account/register?username=dave&password=pwd
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        {
+            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+
+            var user = _mapper.Map<User>(registerDto);
+
+            user.UserName = registerDto.Username.ToLower();
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if (!result.Succeeded) return BadRequest(result.Errors);
+
+            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
+
+            return new UserDto
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Token = await _tokenService.CreateToken(user),
+                UserName = user.UserName,
+                Gender = user.Gender
+            };
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            var user = await _userManager.Users
+                .Include(p => p.Photo)
+                .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+
+            if (user == null) return Unauthorized("invalid username");
+
+            var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+
+            if (!result) return Unauthorized("Invalid password");
+
+            return new UserDto
+            {
+                UserName = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                ImgURL = user.ImgURL,
+                Gender = user.Gender
+            };
+        }
+
+        private async Task<bool> UserExists(string username)
+        {
+            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
+        }
     }
 }

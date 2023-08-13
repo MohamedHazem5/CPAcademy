@@ -14,7 +14,9 @@ namespace CPAcademy.Models
         public string Bio { get; set; }
         public string  City { get; set; } // change on UI
         public string ImgURL { get; set; }
+
         public DateTime CDate { get; set; }
+        public Photo Photo { get; set; } 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Enroll> Enrolls { get; set; }
         public ICollection<Certificate> Certificates { get; set; }
