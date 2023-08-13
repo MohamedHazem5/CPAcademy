@@ -19,7 +19,6 @@ namespace CPAcademy.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDto>>> Index()
         {
@@ -46,5 +45,6 @@ namespace CPAcademy.Controllers
         }
 
         
+
     }
 }

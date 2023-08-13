@@ -28,7 +28,15 @@ namespace CPAcademy.Controllers
         {
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
 
-            var user = _mapper.Map<User>(registerDto);
+            var user = new User
+            {
+                UserName= registerDto.Username,
+                Email = registerDto.Email,
+                City = registerDto.City,
+                FirstName = registerDto.FirstName,
+                LastName = registerDto.LastName,
+                Gender = registerDto.Gender,
+            };
 
             user.UserName = registerDto.Username.ToLower();
 
@@ -42,10 +50,8 @@ namespace CPAcademy.Controllers
 
             return new UserDto
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
                 Token = await _tokenService.CreateToken(user),
-                UserName = user.UserName,
+                Username = user.UserName,
                 Gender = user.Gender
             };
         }
@@ -65,7 +71,7 @@ namespace CPAcademy.Controllers
 
             return new UserDto
             {
-                UserName = user.UserName,
+                Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 ImgURL = user.ImgURL,
                 Gender = user.Gender

@@ -8,6 +8,7 @@ namespace CPAcademy.Services
     {
         public AutoMapperProfile()
         {
+
             CreateMap<Course, CourseDto>()
             .ReverseMap()
             .ForMember(dest => dest.TopicId, src => src.Ignore())

@@ -15,7 +15,6 @@ namespace CPAcademy.Models.DTOs
         [Required] public string FirstName { get; set; }
         [Required] public string LastName { get; set; }
         [Required] public string Gender { get; set; }
-        [Required] public DateTime? DateOfBirth { get; set; } // optional to make required work!
         [Required] public string City { get; set; }
 
         [Required]
