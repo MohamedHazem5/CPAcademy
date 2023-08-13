@@ -29,6 +29,8 @@ namespace CPAcademy.Models
         public User Instructor { get; set; }
 
         public ICollection<Enroll> Enrolls { get; set; }
+        public ICollection<Certificate> Certificates { get; set; }
+        public ICollection<Review> Reviews { get; set; }
 
 
 

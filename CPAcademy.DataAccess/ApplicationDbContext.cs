@@ -27,36 +27,6 @@ namespace CPAcademy.DataAccess
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
-
-
-
-            builder.Entity<Certificate>()
-            .HasOne(x => x.Learner)
-             .WithMany()
-             .HasForeignKey(x => x.LearnerId)
-             .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<Review>()
-                    .HasOne(x => x.Learner)
-                     .WithMany()
-                     .HasForeignKey(x => x.LearnerId)
-                     .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<Discussion>()
-                    .HasOne(x => x.Learner)
-                     .WithMany()
-                     .HasForeignKey(x => x.LearnerId)
-                     .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<Note>()
-                    .HasOne(x => x.Learner)
-                     .WithMany()
-                     .HasForeignKey(x => x.LearnerId)
-                     .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<Progress>()
-                    .HasOne(x => x.Learner)
-                        .WithMany()
-                        .HasForeignKey(x => x.LearnerId)
-                        .OnDelete(DeleteBehavior.NoAction);
-
-
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Blog> Blogs { get; set; }

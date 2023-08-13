@@ -16,6 +16,10 @@ namespace CPAcademy.Models
         public string ImgURL { get; set; }
         public DateTime CDate { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<Enroll> Enrolls { get; set; }
+        public ICollection<Certificate> Certificates { get; set; }
+        public ICollection<Review> Reviews { get; set; }
+        public ICollection<Discussion> Discussions { get; set; }
+        public ICollection<Progress> Progresses { get; set; }
     }
 }
