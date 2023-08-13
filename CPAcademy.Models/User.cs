@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CPAcademy.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace CPAcademy.Models
@@ -8,7 +9,7 @@ namespace CPAcademy.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
         public int EXP { get; set; }
         public string Bio { get; set; }
         public string  City { get; set; } // change on UI
