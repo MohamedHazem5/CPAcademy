@@ -53,7 +53,7 @@ namespace CPAcademy.Controllers
             return Ok();
         }
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> EditCategory(int id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new { state = ModelState, course = id });
