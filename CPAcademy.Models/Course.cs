@@ -28,6 +28,8 @@ namespace CPAcademy.Models
         public int InstructorId { get; set; }
         public User Instructor { get; set; }
 
+        public ICollection<Enroll> Enrolls { get; set; }
+
 
 
     }

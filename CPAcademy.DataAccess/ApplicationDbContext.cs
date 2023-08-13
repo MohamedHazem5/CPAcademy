@@ -35,11 +35,6 @@ namespace CPAcademy.DataAccess
              .WithMany()
              .HasForeignKey(x => x.LearnerId)
              .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<Enroll>()
-                .HasOne(x => x.Learner)
-                 .WithMany()
-                 .HasForeignKey(x => x.LearnerId)
-                 .OnDelete(DeleteBehavior.NoAction);
             builder.Entity<Review>()
                     .HasOne(x => x.Learner)
                      .WithMany()
