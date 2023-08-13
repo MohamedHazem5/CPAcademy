@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CPAcademy.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +15,7 @@ namespace CPAcademy.Models.DTOs
         [Required] public string Email { get; set; }
         [Required] public string FirstName { get; set; }
         [Required] public string LastName { get; set; }
-        [Required] public string Gender { get; set; }
+        [Required] public Gender Gender { get; set; }
         [Required] public string City { get; set; }
 
         [Required]
