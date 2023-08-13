@@ -1,17 +1,35 @@
-﻿
-using CPAcademy.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 
 namespace CPAcademy.DataAccess
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User, Role, int,
+        IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
+        IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
+            builder.Entity<User>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+
+            builder.Entity<Role>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+
+
+
             builder.Entity<Certificate>()
             .HasOne(x => x.Learner)
              .WithMany()
@@ -42,6 +60,8 @@ namespace CPAcademy.DataAccess
                         .WithMany()
                         .HasForeignKey(x => x.LearnerId)
                         .OnDelete(DeleteBehavior.NoAction);
+
+
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Blog> Blogs { get; set; }

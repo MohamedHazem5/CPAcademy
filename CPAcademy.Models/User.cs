@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace CPAcademy.Models
 {
-    public class User
+    public class User : IdentityUser<int>
     {
-        [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
@@ -15,5 +15,6 @@ namespace CPAcademy.Models
         public string  City { get; set; } // change on UI
         public string ImgURL { get; set; }
         public DateTime CDate { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }
