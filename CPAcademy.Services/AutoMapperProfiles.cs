@@ -18,6 +18,11 @@ namespace CPAcademy.Services
             .ForMember(dest => dest.Reviews, src => src.Ignore())
             .ForMember(dest => dest.Certificates, src => src.Ignore());
 
+
+
+            CreateMap<Blog, BlogDto>().ReverseMap();
+
+
             CreateMap<Course, CoursePostDto>()
             .ReverseMap()
             .ForMember(dest => dest.Id, src => src.Ignore())
