@@ -8,64 +8,64 @@ namespace CPAcademy.DataAccess.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        public IArticleRepository ArticleRepository { get; private set; }
-        public IBlogRepository BlogRepository { get; private set; }
-        public ICategoryRepository CategoryRepository { get; private set; }
-        public ICertificateRepository CertificateRepository { get; private set; }
-        public IChoiceRepository ChoiceRepository { get; private set; }
-        public IContentRepository ContentRepository { get; private set; }
-        public ICourseRepository CourseRepository { get; private set; }
-        public IDiscussionRepository DiscussionRepository { get; private set; }
-        public IEnrollRepository EnrollRepository { get; private set; }
-        public IEventRepository EventRepository { get; private set; }
-        public IInterestRepository InterestRepository { get; private set; }
-        public ILearnerInterestRepository LearnerInterestRepository { get; private set; }
-        public ILectuteRepository LectuteRepository { get; private set; }
-        public IMailRepository MailRepository { get; private set; }
-        public INewsRepository NewsRepository { get; private set; }
-        public INoteRepository NoteRepository { get; private set; }
-        public IProgressRepository ProgressRepository { get; private set; }
-        public IQuestionRepository QuestionRepository { get; private set; }
-        public IQuizRepository QuizRepository { get; private set; }
-        public IReviewRepository ReviewRepository { get; private set; }
-        public ISectionRepository SectionRepository { get; private set; }
-        public ISkillCourseRepository SkillCourseRepository { get; private set; }
-        public ISkillRepository SkillRepository { get; private set; }
-        public ISubscriptionRepository SubscriptionRepository { get; private set; }
-        public ITopicRepository TopicRepository { get; private set; }
-        public IUserRepository UserRepository { get; private set; }
-        public IVideoRepository VideoRepository { get; private set; }
+        public IArticleRepository Article { get; private set; }
+        public IBlogRepository Blog { get; private set; }
+        public ICategoryRepository Category { get; private set; }
+        public ICertificateRepository Certificate { get; private set; }
+        public IChoiceRepository Choice { get; private set; }
+        public IContentRepository Content { get; private set; }
+        public ICourseRepository Course { get; private set; }
+        public IDiscussionRepository Discussion { get; private set; }
+        public IEnrollRepository Enroll { get; private set; }
+        public IEventRepository Event { get; private set; }
+        public IInterestRepository Interest { get; private set; }
+        public ILearnerInterestRepository LearnerInterest { get; private set; }
+        public ILectuteRepository Lectute { get; private set; }
+        public IMailRepository Mail { get; private set; }
+        public INewsRepository News { get; private set; }
+        public INoteRepository Note { get; private set; }
+        public IProgressRepository Progress { get; private set; }
+        public IQuestionRepository Question { get; private set; }
+        public IQuizRepository Quiz { get; private set; }
+        public IReviewRepository Review { get; private set; }
+        public ISectionRepository Section { get; private set; }
+        public ISkillCourseRepository SkillCourse { get; private set; }
+        public ISkillRepository Skill { get; private set; }
+        public ISubscriptionRepository Subscription { get; private set; }
+        public ITopicRepository Topic { get; private set; }
+        public IUserRepository User { get; private set; }
+        public IVideoRepository Video { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            ArticleRepository = new ArticleRepository(_context);
-            BlogRepository = new BlogRepository(_context);
-            CategoryRepository = new CategoryRepository(_context);
-            CertificateRepository = new CertificateRepository(_context);
-            ChoiceRepository = new ChoiceRepository(_context);
-            ContentRepository = new ContentRepository(_context);
-            CourseRepository = new CourseRepository(_context);
-            DiscussionRepository = new DiscussionRepository(_context);
-            EnrollRepository = new EnrollRepository(_context);
-            EventRepository = new EventRepository(_context);
-            InterestRepository = new InterestRepository(_context);
-            LearnerInterestRepository = new LearnerInterestRepository(_context);
-            LectuteRepository = new LectuteRepository(_context);
-            MailRepository = new MailRepository(_context);
-            NewsRepository = new NewsRepository(_context);
-            NoteRepository = new NoteRepository(_context);
-            ProgressRepository = new ProgressRepository(_context);
-            QuestionRepository = new QuestionRepository(_context);
-            QuizRepository = new QuizRepository(_context);
-            ReviewRepository = new ReviewRepository(_context);
-            SectionRepository = new SectionRepository(_context);
-            SkillCourseRepository = new SkillCourseRepository(_context);
-            SkillRepository = new SkillRepository(_context);
-            SubscriptionRepository = new SubscriptionRepository(_context);
-            TopicRepository = new TopicRepository(_context);
-            UserRepository = new UserRepository(_context);
-            VideoRepository = new VideoRepository(_context);
+            Article = new ArticleRepository(_context);
+            Blog = new BlogRepository(_context);
+            Category = new CategoryRepository(_context);
+            Certificate = new CertificateRepository(_context);
+            Choice = new ChoiceRepository(_context);
+            Content = new ContentRepository(_context);
+            Course = new CourseRepository(_context);
+            Discussion = new DiscussionRepository(_context);
+            Enroll = new EnrollRepository(_context);
+            Event = new EventRepository(_context);
+            Interest = new InterestRepository(_context);
+            LearnerInterest = new LearnerInterestRepository(_context);
+            Lectute = new LectuteRepository(_context);
+            Mail = new MailRepository(_context);
+            News = new NewsRepository(_context);
+            Note = new NoteRepository(_context);
+            Progress = new ProgressRepository(_context);
+            Question = new QuestionRepository(_context);
+            Quiz = new QuizRepository(_context);
+            Review = new ReviewRepository(_context);
+            Section = new SectionRepository(_context);
+            SkillCourse = new SkillCourseRepository(_context);
+            Skill = new SkillRepository(_context);
+            Subscription = new SubscriptionRepository(_context);
+            Topic = new TopicRepository(_context);
+            User = new UserRepository(_context);
+            Video = new VideoRepository(_context);
         }
 
         public void Dispose()
