@@ -1,3 +1,6 @@
+using CPAcademy.Services.IServices;
+using CPAcademy.Services;
+
 namespace CPAcademy.Extentions
 {
     public static class ApplicationServiceExtensions
@@ -7,9 +10,10 @@ namespace CPAcademy.Extentions
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
+            services.AddAutoMapper(typeof(Program).Assembly);
+
             return services;
 
         }

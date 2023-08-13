@@ -9,15 +9,18 @@ namespace CPAcademy.Extentions
     public static class IdentityServiceExtensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,
-            IConfiguration config)
+           IConfiguration config)
         {
+
+
             services.AddIdentityCore<User>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
-              
             })
                 .AddRoles<Role>()
                 .AddRoleManager<RoleManager<Role>>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddRoleValidator<RoleValidator<Role>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -26,34 +29,15 @@ namespace CPAcademy.Extentions
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding
-                            .UTF8.GetBytes(config["TokenKey"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
                     };
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-                            var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken))
-                            {
-                                context.Token = accessToken;
-                            }
-                            return Task.CompletedTask;
-                        }
-                    };
+
                 });
 
-
-
-            services.AddAuthorization(opt =>
-            {
-                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-            });
-
             return services;
+
         }
     }
 }
