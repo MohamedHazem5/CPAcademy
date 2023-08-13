@@ -11,14 +11,10 @@ namespace CPAcademy.Controllers
 {
     public class CourseController : BaseAPIController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public CourseController(IMapper mapper, IUnitOfWork unitOfWork)
+        public CourseController(IUnitOfWork unitOfWork,IMapper mapper) : base(unitOfWork,mapper)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDto>>> Index()
         {
@@ -34,7 +30,6 @@ namespace CPAcademy.Controllers
             var result = _mapper.Map<CourseDto>(courses);
             return Ok(result);
         }
-
 
         [HttpGet("Details/{Id}")]
         public async Task<ActionResult<Course>> Details(int Id)
@@ -54,7 +49,6 @@ namespace CPAcademy.Controllers
             await _unitOfWork.Course.AddAsync(course);
             await _unitOfWork.Save();
             return Ok(course);
-
         }
 
 

@@ -12,10 +12,9 @@ namespace CPAcademy.Extentions
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddAutoMapper(typeof(Program).Assembly);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
-
         }
 
     }

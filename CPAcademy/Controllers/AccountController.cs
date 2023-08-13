@@ -15,15 +15,9 @@ namespace CPAcademy.Controllers
     [ApiController]
     public class AccountController : BaseAPIController
     {
-        private readonly UserManager<User> _userManager;
-        private readonly ITokenService _tokenService;
-        private readonly IMapper _mapper;
-
-        public AccountController(UserManager<User> userManager, ITokenService tokenService, IMapper mapper)
+        public AccountController(UserManager<User> userManager, ITokenService tokenService)
+                                : base(userManager: userManager, tokenService: tokenService)
         {
-            _userManager = userManager;
-            _mapper = mapper;
-            _tokenService = tokenService;
         }
 
         [HttpPost("register")] // POST: api/account/register?username=dave&password=pwd
@@ -33,7 +27,7 @@ namespace CPAcademy.Controllers
 
             var user = new User
             {
-                UserName= registerDto.Username,
+                UserName = registerDto.Username,
                 Email = registerDto.Email,
                 City = registerDto.City,
                 FirstName = registerDto.FirstName,
