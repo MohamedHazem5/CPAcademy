@@ -31,20 +31,34 @@ namespace CPAcademy.Controllers
         [HttpGet("{Id}")]
         public async Task<ActionResult<CourseDto>> Index(int Id)
         {
-            var courses = await _unitOfWork.Course.GetFirstOrDefaultAsync(c => c.Id == Id,c=> c.Instructor, c => c.Category, c => c.Topic);
+            var courses = await _unitOfWork.Course.GetFirstOrDefaultAsync(c => c.Id == Id, c => c.Instructor, c => c.Category, c => c.Topic);
             var result = _mapper.Map<CourseDto>(courses);
             return Ok(result);
         }
 
 
-        [HttpGet("{Details/{Id}")]
+        [HttpGet("Details/{Id}")]
         public async Task<ActionResult<Course>> Details(int Id)
         {
             var course = await _unitOfWork.Course.GetFirstOrDefaultAsync(c => c.Id == Id, c => c.Instructor,
-                                                                         c => c.Category, c => c.Topic, c=> c.Reviews);
+                                                                         c => c.Category, c => c.Topic, c => c.Reviews);
             return Ok(course);
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> AddCourse(CoursePostDto coursePostDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new { state = ModelState, course = coursePostDto });
+
+            var course = _mapper.Map<Course>(coursePostDto);
+            await _unitOfWork.Course.AddAsync(course);
+            await _unitOfWork.Save();
+            return Ok(course);
+
+        }
+
+
+
     }
 }
