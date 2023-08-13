@@ -17,6 +17,8 @@ namespace CPAcademy.Services
             .ForMember(dest => dest.Enrolls, src => src.Ignore())
             .ForMember(dest => dest.Reviews, src => src.Ignore())
             .ForMember(dest => dest.Certificates, src => src.Ignore());
+
+            
         }
     }
 }
