@@ -8,15 +8,15 @@ namespace CPAcademy.Services
     {
         public AutoMapperProfile()
         {
-            CreateMap<RegisterDto, User>().ForMember(dis => dis.EXP,src=>src.Ignore())
-                .ForMember(dis => dis.EXP, src => src.Ignore())
-                .ForMember(dis => dis.Bio, src => src.Ignore())
-                .ForMember(dis => dis.PhoneNumber, src => src.Ignore())
-                .ForMember(dis => dis.ImgURL, src => src.Ignore())
-                .ForMember(dis => dis.CDate, src => src.Ignore())
-                
-                .ReverseMap()
-                ;
+
+            CreateMap<Course, CourseDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.TopicId, src => src.Ignore())
+            .ForMember(dest => dest.CategoryId, src => src.Ignore())
+            .ForMember(dest => dest.InstructorId, src => src.Ignore())
+            .ForMember(dest => dest.Enrolls, src => src.Ignore())
+            .ForMember(dest => dest.Reviews, src => src.Ignore())
+            .ForMember(dest => dest.Certificates, src => src.Ignore());
         }
     }
 }
