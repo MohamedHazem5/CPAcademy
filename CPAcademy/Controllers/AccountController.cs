@@ -3,6 +3,7 @@ using CPAcademy.Models;
 using CPAcademy.Models.DTOs;
 using CPAcademy.Models.Enums;
 using CPAcademy.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using CPAcademy.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,6 +49,8 @@ namespace CPAcademy.Controllers
             await _unitOfWork.Save();
             return Ok();
         }
+
+
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
