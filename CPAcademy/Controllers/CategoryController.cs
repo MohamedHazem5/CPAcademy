@@ -7,15 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPAcademy.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseAPIController
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public CategoryController(IUnitOfWork unitOfWork)
+        public CategoryController(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -35,7 +30,7 @@ namespace CPAcademy.Controllers
         public async Task<ActionResult<Category>> AddCategory(string categoryName)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new { state = ModelState, course = categoryName });
+                return BadRequest(new { state = ModelState, obj = categoryName });
 
             var result = await _unitOfWork.Category.AddAsync(new Category { Name = categoryName });
             await _unitOfWork.Save();
@@ -46,7 +41,7 @@ namespace CPAcademy.Controllers
         public async Task<IActionResult> EditCategory(Category category)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new { state = ModelState, course = category });
+                return BadRequest(new { state = ModelState, obj = category });
 
             _unitOfWork.Category.Update(category);
             await _unitOfWork.Save();
@@ -56,7 +51,7 @@ namespace CPAcademy.Controllers
         public async Task<IActionResult> DeleteCategory(int id)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new { state = ModelState, course = id });
+                return BadRequest(new { state = ModelState, obj = id });
             var category = await _unitOfWork.Category.GetFirstOrDefaultAsync(c => c.Id == id);
             if (category == null)
             {
