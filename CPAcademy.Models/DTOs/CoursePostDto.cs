@@ -7,7 +7,6 @@ namespace CPAcademy.Models.DTOs
 {
     public class CoursePostDto
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string About { get; set; }
         public string VideoUrl { get; set; }
