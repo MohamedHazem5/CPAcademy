@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IProfile\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CPAcademy.Models\CPAcademy.Models.csproj" />
   </ItemGroup>
 
