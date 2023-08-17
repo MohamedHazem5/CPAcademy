@@ -8,6 +8,6 @@ namespace CPAcademy.Models
         public string Content { get; set; }
         public string Template { get; set; }
         public string ImageUrl { get; set; }
-        public DateTime CDate { get; set; }
+        public DateTime CDate { get; set; } = DateTime.Now;
     }
 }
