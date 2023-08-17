@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPAcademy.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class TopicController : BaseAPIController
     {
         public TopicController(IUnitOfWork unitOfWork) : base(unitOfWork)
@@ -54,11 +52,11 @@ namespace CPAcademy.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(new { state = ModelState, obj = id });
-            var category = await _unitOfWork.Topic.GetFirstOrDefaultAsync(c => c.Id == id);
-            if (category == null)
+            var topic = await _unitOfWork.Topic.GetFirstOrDefaultAsync(c => c.Id == id);
+            if (topic == null)
                 return NotFound();
 
-            _unitOfWork.Topic.Delete(category);
+            _unitOfWork.Topic.Delete(topic);
             await _unitOfWork.Save();
             return Ok();
         }

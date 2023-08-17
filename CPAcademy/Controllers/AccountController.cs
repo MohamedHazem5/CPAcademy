@@ -11,8 +11,7 @@ using System;
 
 namespace CPAcademy.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
     public class AccountController : BaseAPIController
     {
         public AccountController(UserManager<User> userManager, ITokenService tokenService)
