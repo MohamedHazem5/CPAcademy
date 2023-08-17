@@ -10,7 +10,7 @@ namespace CPAcademy.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public DateTime CDate { get; set; }
+        public DateTime CDate { get; set; } = DateTime.Now;
         public int CourseId { get; set; }
         public Course Course { get; set;}
 

@@ -19,7 +19,7 @@ namespace CPAcademy.Models
         public DateTime Duration { get; set; }
         public double Price { get; set; }
         public double ListPrice { get; set; }
-        public DateTime CDate { get; set; }
+        public DateTime CDate { get; set; } = DateTime.Now;
         public DateTime LastUpdated { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
@@ -31,6 +31,7 @@ namespace CPAcademy.Models
         public ICollection<Enroll> Enrolls { get; set; }
         public ICollection<Certificate> Certificates { get; set; }
         public ICollection<Review> Reviews { get; set; }
+        public ICollection<SkillCourse> Skills { get; set; }
 
 
 

@@ -6,7 +6,7 @@ namespace CPAcademy.Models
         public int Id { get; set; }
         public double Rate { get; set; }
         public string Comment { get; set; }
-        public DateTime CDate { get; set; }
+        public DateTime CDate { get; set; } = DateTime.Now;
         public User Learner { get; set; }
         public Course Course { get; set; }
     }

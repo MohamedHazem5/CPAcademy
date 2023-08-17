@@ -1,11 +1,9 @@
 ﻿
 namespace CPAcademy.Models
 {
-    public class Quiz
+    public class Quiz : Lecture
     {
-        public int Id { get; set; }
-        public int LectureId { get; set; }
-        public Lecture Lecture { get; set; }
+
 
     }
 }
