@@ -102,6 +102,30 @@ namespace CPAcademy.Controllers
             return Ok(course);
         }
 
+        [HttpGet("Section/{CourseId}")]
+        public async Task<IActionResult> GetSections(int CourseId)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var Sections = await _unitOfWork.Section.GetAllAsync(s => s.CourseId == CourseId);
+            if (Sections == null)
+                return NotFound();
+            return Ok(Sections);
+        }
+
+        [HttpPost("Add")]
+        public async Task<IActionResult> AddSection(CoursePostDto coursePostDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new { state = ModelState, course = coursePostDto });
+
+            var course = _mapper.Map<Course>(coursePostDto);
+            await _unitOfWork.Course.AddAsync(course);
+            await _unitOfWork.Save();
+            return Ok(course);
+        }
+
+
 
 
     }
