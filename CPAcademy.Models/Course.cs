@@ -9,14 +9,13 @@ namespace CPAcademy.Models
 {
     public class Course
     {
-        [Key]
         public int Id { get; set; }
         public string Title { get; set; }
         public string About { get; set; }
         public string VideoUrl { get; set; }
         [Range(0, 5)]
         public int SkillLevel { get; set; }
-        public DateTime Duration { get; set; }
+        public TimeSpan Duration { get; set; }
         public double Price { get; set; }
         public double ListPrice { get; set; }
         public DateTime CDate { get; set; } = DateTime.Now;
