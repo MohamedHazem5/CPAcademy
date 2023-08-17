@@ -21,6 +21,7 @@ namespace CPAcademy.Services
 
 
             CreateMap<Blog, BlogDto>().ReverseMap();
+            CreateMap<Event, EventDto>().ReverseMap();
 
 
             CreateMap<Course, CoursePostDto>()

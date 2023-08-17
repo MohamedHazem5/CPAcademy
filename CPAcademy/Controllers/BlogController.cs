@@ -20,23 +20,15 @@ namespace CPAcademy.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Blog>>> Index()
         {
             var result = await _unitOfWork.Blog.GetAllAsync();
             return Ok(result);
         }
-
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<Blog>> Index(int Id)
-        {
-            var blog = await _unitOfWork.Blog.GetFirstOrDefaultAsync(c => c.Id == Id);
-            return Ok(blog);
-        }
-
-
         [HttpGet("Details/{Id}")]
-        public async Task<ActionResult<Course>> Details(int Id)
+        public async Task<ActionResult<Blog>> Details(int Id)
         {
             var blog = await _unitOfWork.Blog.GetFirstOrDefaultAsync(c => c.Id == Id);
             return Ok(blog);
