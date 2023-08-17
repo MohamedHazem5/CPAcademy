@@ -4,6 +4,7 @@ using CPAcademy.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPAcademy.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230817204411_EditModelsforSecondtime")]
+    partial class EditModelsforSecondtime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,27 +24,6 @@ namespace CPAcademy.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CPAcademy.Models.Article", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LectureId");
-
-                    b.ToTable("Articles");
-                });
 
             modelBuilder.Entity("CPAcademy.Models.Blog", b =>
                 {
@@ -362,6 +344,10 @@ namespace CPAcademy.DataAccess.Migrations
                     b.Property<DateTime>("CDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
@@ -381,7 +367,11 @@ namespace CPAcademy.DataAccess.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("Lectures");
+                    b.ToTable("Lecture");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Lecture");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("CPAcademy.Models.Mail", b =>
@@ -395,7 +385,7 @@ namespace CPAcademy.DataAccess.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("NewsId")
@@ -531,24 +521,6 @@ namespace CPAcademy.DataAccess.Migrations
                     b.HasIndex("QuizId");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("CPAcademy.Models.Quiz", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LectureId");
-
-                    b.ToTable("Quizzes");
                 });
 
             modelBuilder.Entity("CPAcademy.Models.Review", b =>
@@ -823,27 +795,6 @@ namespace CPAcademy.DataAccess.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("CPAcademy.Models.Video", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LectureId");
-
-                    b.ToTable("Videos");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -934,13 +885,29 @@ namespace CPAcademy.DataAccess.Migrations
 
             modelBuilder.Entity("CPAcademy.Models.Article", b =>
                 {
-                    b.HasOne("CPAcademy.Models.Lecture", "Lecture")
-                        .WithMany()
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("CPAcademy.Models.Lecture");
 
-                    b.Navigation("Lecture");
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Article");
+                });
+
+            modelBuilder.Entity("CPAcademy.Models.Quiz", b =>
+                {
+                    b.HasBaseType("CPAcademy.Models.Lecture");
+
+                    b.HasDiscriminator().HasValue("Quiz");
+                });
+
+            modelBuilder.Entity("CPAcademy.Models.Video", b =>
+                {
+                    b.HasBaseType("CPAcademy.Models.Lecture");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Video");
                 });
 
             modelBuilder.Entity("CPAcademy.Models.Blog", b =>
@@ -972,7 +939,7 @@ namespace CPAcademy.DataAccess.Migrations
             modelBuilder.Entity("CPAcademy.Models.Choice", b =>
                 {
                     b.HasOne("CPAcademy.Models.Question", "Question")
-                        .WithMany("Choices")
+                        .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1081,7 +1048,7 @@ namespace CPAcademy.DataAccess.Migrations
             modelBuilder.Entity("CPAcademy.Models.Lecture", b =>
                 {
                     b.HasOne("CPAcademy.Models.Section", "Section")
-                        .WithMany("Lectures")
+                        .WithMany()
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1152,23 +1119,12 @@ namespace CPAcademy.DataAccess.Migrations
             modelBuilder.Entity("CPAcademy.Models.Question", b =>
                 {
                     b.HasOne("CPAcademy.Models.Quiz", "Quiz")
-                        .WithMany("Questions")
+                        .WithMany()
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Quiz");
-                });
-
-            modelBuilder.Entity("CPAcademy.Models.Quiz", b =>
-                {
-                    b.HasOne("CPAcademy.Models.Lecture", "Lecture")
-                        .WithMany()
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lecture");
                 });
 
             modelBuilder.Entity("CPAcademy.Models.Review", b =>
@@ -1244,17 +1200,6 @@ namespace CPAcademy.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CPAcademy.Models.Video", b =>
-                {
-                    b.HasOne("CPAcademy.Models.Lecture", "Lecture")
-                        .WithMany()
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lecture");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("CPAcademy.Models.Role", null)
@@ -1311,24 +1256,9 @@ namespace CPAcademy.DataAccess.Migrations
                     b.Navigation("Progresses");
                 });
 
-            modelBuilder.Entity("CPAcademy.Models.Question", b =>
-                {
-                    b.Navigation("Choices");
-                });
-
-            modelBuilder.Entity("CPAcademy.Models.Quiz", b =>
-                {
-                    b.Navigation("Questions");
-                });
-
             modelBuilder.Entity("CPAcademy.Models.Role", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("CPAcademy.Models.Section", b =>
-                {
-                    b.Navigation("Lectures");
                 });
 
             modelBuilder.Entity("CPAcademy.Models.User", b =>

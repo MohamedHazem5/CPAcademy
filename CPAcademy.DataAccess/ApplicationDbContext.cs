@@ -39,6 +39,7 @@ namespace CPAcademy.DataAccess
         public DbSet<Event> Events { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<LearnerInterest> LearnerInterests { get; set; }
+        public DbSet<Lecture> Lectures { get; set; }
         public DbSet<Mail> Mail { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Note> Notes { get; set; }
