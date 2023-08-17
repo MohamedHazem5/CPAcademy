@@ -5,7 +5,7 @@ namespace CPAcademy.Models
     public class Event
     {
         public int Id { get; set; }
-        public int Title { get; set; }
+        public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CDate { get; set; }
         public string ImageUrl { get; set; }
