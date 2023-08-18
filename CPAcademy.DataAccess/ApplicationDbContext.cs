@@ -22,6 +22,11 @@
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+            builder.Entity<Review>()
+            .HasOne(x => x.Learner)
+             .WithMany()
+             .HasForeignKey(x => x.LearnerId)
+             .OnDelete(DeleteBehavior.NoAction);
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Blog> Blogs { get; set; }
