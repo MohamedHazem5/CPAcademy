@@ -1,3 +1,6 @@
+using CPAcademy.Models;
+using CPAcademy.Models.DTOs;
+
 namespace CPAcademy.Controllers
 {
     public class CourseController : BaseAPIController
@@ -97,6 +100,49 @@ namespace CPAcademy.Controllers
             _unitOfWork.Course.Delete(course);
             await _unitOfWork.Save();
             return Ok(course);
+        }
+
+
+        [HttpPost("/reviews/{courseId}")]
+        public async Task<IActionResult> AddReview(int userId, int courseId, ReviewDto reviewDto)
+        {
+            var existingReview = await _unitOfWork.Review.GetFirstOrDefaultAsync(r =>
+                r.CourseId == courseId && r.LearnerId == userId);
+
+            if (existingReview != null)
+            {
+                return BadRequest("You have already added a review for this course");
+            }
+
+            var newReview = new Review
+            {
+                CourseId = courseId,
+                LearnerId = userId,
+                Rate = reviewDto.Rate,
+                Comment = reviewDto.Comment
+            };
+
+            await _unitOfWork.Review.AddAsync(newReview);
+            await _unitOfWork.Save();
+
+            return Ok(newReview);
+        }
+
+        [HttpPut("reviewId={reviewId}")]
+        public async Task<IActionResult> UpdateReview(int reviewId, ReviewDto updatedReview)
+        {
+            var review = await _unitOfWork.Review.GetFirstOrDefaultAsync(r => r.Id == reviewId);
+            if (review == null)
+                return NotFound();
+            
+
+            review.Rate = updatedReview.Rate;
+            review.Comment = updatedReview.Comment;
+
+            _unitOfWork.Review.Update(review);
+            await _unitOfWork.Save();
+
+            return Ok(review);
         }
 
 
