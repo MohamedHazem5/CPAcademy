@@ -1,0 +1,10 @@
+global using CPAcademy.Models;
+global using CPAcademy.Services.IServices;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using AutoMapper;
+global using CPAcademy.Models.DTOs;

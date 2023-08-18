@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CPAcademy.DataAccess.Repository
 {
     public class UnitOfWork : IUnitOfWork
@@ -20,7 +15,7 @@ namespace CPAcademy.DataAccess.Repository
         public IEventRepository Event { get; private set; }
         public IInterestRepository Interest { get; private set; }
         public ILearnerInterestRepository LearnerInterest { get; private set; }
-        public ILectuteRepository Lectute { get; private set; }
+        public ILectureRepository Lecture { get; private set; }
         public IMailRepository Mail { get; private set; }
         public INewsRepository News { get; private set; }
         public INoteRepository Note { get; private set; }
@@ -51,7 +46,7 @@ namespace CPAcademy.DataAccess.Repository
             Event = new EventRepository(_context);
             Interest = new InterestRepository(_context);
             LearnerInterest = new LearnerInterestRepository(_context);
-            Lectute = new LectuteRepository(_context);
+            Lecture = new LectureRepository(_context);
             Mail = new MailRepository(_context);
             News = new NewsRepository(_context);
             Note = new NoteRepository(_context);

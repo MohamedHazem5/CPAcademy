@@ -1,25 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using CPAcademy.Models;
-using CPAcademy.Models.DTOs;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CPAcademy.Controllers
 {
     public class CourseController : BaseAPIController
     {
-        public CourseController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public CourseController(IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CourseDto>>> Index()
         {
-            var courses = await _unitOfWork.Course.GetAllAsync();
+            var courses = await _unitOfWork.Course.GetAllAsync(includeProperties: c => c.Reviews);
             var result = _mapper.Map<IEnumerable<CourseDto>>(courses);
+            _unitOfWork.Course.AvrageRate(result);
             return Ok(result);
         }
 
@@ -101,31 +98,6 @@ namespace CPAcademy.Controllers
             await _unitOfWork.Save();
             return Ok(course);
         }
-
-        [HttpGet("Section/{CourseId}")]
-        public async Task<IActionResult> GetSections(int CourseId)
-        {
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var Sections = await _unitOfWork.Section.GetAllAsync(s => s.CourseId == CourseId);
-            if (Sections == null)
-                return NotFound();
-            return Ok(Sections);
-        }
-
-        [HttpPost("AddSection")]
-        public async Task<IActionResult> AddSection(CoursePostDto coursePostDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(new { state = ModelState, course = coursePostDto });
-
-            var course = _mapper.Map<Course>(coursePostDto);
-            await _unitOfWork.Course.AddAsync(course);
-            await _unitOfWork.Save();
-            return Ok(course);
-        }
-
-
 
 
     }

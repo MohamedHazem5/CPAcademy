@@ -2,9 +2,11 @@ namespace CPAcademy.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
+        protected readonly ApplicationDbContext _context;
         private readonly DbSet<T> _dbSet;
         public Repository(ApplicationDbContext context)
         {
+            _context = context;
             _dbSet = context.Set<T>();
         }
 

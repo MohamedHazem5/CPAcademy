@@ -1,13 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Azure;
-using CPAcademy.Models;
-using CPAcademy.Models.DTOs;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CPAcademy.Controllers
 {
     public class BlogController : BaseAPIController

@@ -1,10 +1,4 @@
-﻿using CPAcademy.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
-namespace CPAcademy.Extentions
+﻿namespace CPAcademy.Extentions
 {
     public static class IdentityServiceExtensions
     {
