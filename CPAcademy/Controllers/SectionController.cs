@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using CPAcademy.Models;
-using CPAcademy.Models.DTOs;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CPAcademy.Controllers
 {
 
     public class SectionController : BaseAPIController
     {
-        public SectionController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public SectionController(IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> index(int id)

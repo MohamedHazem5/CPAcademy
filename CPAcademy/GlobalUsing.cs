@@ -1,0 +1,15 @@
+global using CPAcademy.DataAccess;
+global using Microsoft.EntityFrameworkCore;
+global using CPAcademy.DataAccess.Repository.IRepository;
+global using CPAcademy.DataAccess.Repository;
+global using CPAcademy.Extentions;
+global using AutoMapper;
+global using CPAcademy.Models;
+global using CPAcademy.Models.DTOs;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Mvc;
+global using CPAcademy.Services.IServices;
+global using CPAcademy.Services;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using System.Text;

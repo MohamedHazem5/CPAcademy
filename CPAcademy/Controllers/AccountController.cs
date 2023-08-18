@@ -1,22 +1,15 @@
-﻿using AutoMapper;
-using CPAcademy.Models;
-using CPAcademy.Models.DTOs;
-using CPAcademy.Models.Enums;
-using CPAcademy.Services.IServices;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-
-namespace CPAcademy.Controllers
+﻿namespace CPAcademy.Controllers
 {
 
     public class AccountController : BaseAPIController
     {
+        private readonly UserManager<User> _userManager;
+        private readonly ITokenService _tokenService;
+
         public AccountController(UserManager<User> userManager, ITokenService tokenService)
-                                : base(userManager: userManager, tokenService: tokenService)
         {
+            _userManager = userManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")] // POST: api/account/register?username=dave&password=pwd

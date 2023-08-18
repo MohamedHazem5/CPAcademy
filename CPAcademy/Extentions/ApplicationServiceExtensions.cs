@@ -1,6 +1,3 @@
-using CPAcademy.Services.IServices;
-using CPAcademy.Services;
-
 namespace CPAcademy.Extentions
 {
     public static class ApplicationServiceExtensions

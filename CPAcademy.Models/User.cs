@@ -1,7 +1,4 @@
 ﻿using CPAcademy.Models.Enums;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-
 namespace CPAcademy.Models
 {
     public class User : IdentityUser<int>

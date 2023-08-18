@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CPAcademy.Models;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CPAcademy.Controllers
 {
     public class TopicController : BaseAPIController
     {
-        public TopicController(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
-        }
+        private readonly IUnitOfWork _unitOfWork;
 
+        public TopicController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Topic>>> Index()
         {
