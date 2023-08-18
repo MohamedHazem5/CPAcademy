@@ -74,6 +74,7 @@ namespace CPAcademy.Controllers
                 return BadRequest(new { state = ModelState, course = coursePostDto });
 
             var course = _mapper.Map<Course>(coursePostDto);
+            course.Duration = TimeSpan.FromSeconds(coursePostDto.Duration);
             await _unitOfWork.Course.AddAsync(course);
             await _unitOfWork.Save();
             return Ok(course);
