@@ -12,7 +12,9 @@ namespace CPAcademy.Models.DTOs
         public string About { get; set; }
         public string VideoUrl { get; set; }
         public int SkillLevel { get; set; }
-        public DateTime Duration { get; set; }
+        public double AvgRate { get; set; }
+        public TimeSpan Duration { get; set; }
+        public int NumberOfLecture { get; set; }
         public double Price { get; set; }
         public double ListPrice { get; set; }
         public DateTime CDate { get; set; }
