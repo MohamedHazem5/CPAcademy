@@ -43,16 +43,25 @@ namespace CPAcademy.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Edit")]
-        public async Task<IActionResult> EditBlog(BlogDto blogDto)
+        [HttpPut("Edit/{id}")]
+        public async Task<IActionResult> EditBlog(int id, BlogDto blogDto)
         {
             if (!ModelState.IsValid)
-                return BadRequest("THERE IS ERROR WHILE ADDING BLOG");
+            {
+                return BadRequest("There are errors in the provided data.");
+            }
 
-            var blog = _mapper.Map<Blog>(blogDto);
-            _unitOfWork.Blog.Update(blog);
-            _unitOfWork.Save();
-            return Ok(blog);
+            var existingBlog = await _unitOfWork.Blog.GetFirstOrDefaultAsync(c => c.Id == id);
+            if (existingBlog == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(blogDto, existingBlog);
+            _unitOfWork.Blog.Update(existingBlog);
+            await _unitOfWork.Save();
+
+            return Ok(existingBlog);
         }
 
         [HttpDelete("Delete/{id}")]

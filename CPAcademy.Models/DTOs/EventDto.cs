@@ -6,5 +6,6 @@
         public string Content { get; set; }
         public string ImageUrl { get; set; }
         public DateTime Date { get; set; }
+        public int AdminId { get; set; }
     }
 }
