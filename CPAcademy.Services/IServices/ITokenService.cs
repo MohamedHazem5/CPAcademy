@@ -1,6 +1,4 @@
-﻿using CPAcademy.Models;
-
-namespace CPAcademy.Services.IServices
+﻿namespace CPAcademy.Services.IServices
 {
     public interface ITokenService
     {

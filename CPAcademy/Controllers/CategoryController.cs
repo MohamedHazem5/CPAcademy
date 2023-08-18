@@ -1,13 +1,14 @@
-
-using CPAcademy.Models;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CPAcademy.Controllers
 {
     public class CategoryController : BaseAPIController
     {
-        public CategoryController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public CategoryController(IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]

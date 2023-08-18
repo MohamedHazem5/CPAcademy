@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using CPAcademy.Models;
-using CPAcademy.Models.DTOs;
-
-namespace CPAcademy.Services
+﻿namespace CPAcademy.Services
 {
     public class AutoMapperProfile : Profile
     {

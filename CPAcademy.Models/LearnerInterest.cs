@@ -1,6 +1,4 @@
-﻿
-
-namespace CPAcademy.Models
+﻿namespace CPAcademy.Models
 {
     public class LearnerInterest
     {

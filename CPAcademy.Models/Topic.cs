@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-
-namespace CPAcademy.Models
+﻿namespace CPAcademy.Models
 {
     public class Topic
     {

@@ -1,17 +1,15 @@
-﻿using AutoMapper;
-using CPAcademy.Models;
-using CPAcademy.Models.DTOs;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata;
-
-namespace CPAcademy.Controllers
+﻿namespace CPAcademy.Controllers
 {
 
     public class EventController : BaseAPIController
     {
-        public EventController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public EventController(IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
