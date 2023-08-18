@@ -14,7 +14,7 @@ namespace CPAcademy.DataAccess.Repository.IRepository
         IEventRepository Event { get; }
         IInterestRepository Interest{ get; }
         ILearnerInterestRepository LearnerInterest{ get; }
-        ILectuteRepository Lectute { get; }
+        ILectureRepository Lecture { get; }
         IMailRepository Mail { get; }
         INewsRepository News { get; }
         INoteRepository Note { get; }
