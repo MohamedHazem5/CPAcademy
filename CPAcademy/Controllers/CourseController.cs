@@ -113,7 +113,7 @@ namespace CPAcademy.Controllers
             return Ok(Sections);
         }
 
-        [HttpPost("Add")]
+        [HttpPost("AddSection")]
         public async Task<IActionResult> AddSection(CoursePostDto coursePostDto)
         {
             if (!ModelState.IsValid)

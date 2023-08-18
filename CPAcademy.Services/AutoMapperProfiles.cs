@@ -24,6 +24,7 @@ namespace CPAcademy.Services
             CreateMap<Event, EventDto>().ReverseMap();
 
 
+
             CreateMap<Course, CoursePostDto>()
             .ReverseMap()
             .ForMember(dest => dest.Id, src => src.Ignore())

@@ -38,17 +38,28 @@ namespace CPAcademy.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Edit")]
-        public async Task<IActionResult> EditEvent(EventDto eventdto)
+        [HttpPut("Edit/{id}")]
+        public async Task<IActionResult> EditEvent(int id, EventDto eventDto)
         {
             if (!ModelState.IsValid)
-                return BadRequest("THERE IS ERROR WHILE ADDING Event");
+            {
+                return BadRequest("There are errors in the provided data.");
+            }
 
-            var result = _mapper.Map<Event>(eventdto);
-            _unitOfWork.Event.Update(result);
+            var existingEvent = await _unitOfWork.Event.GetFirstOrDefaultAsync(c => c.Id == id);
+            if (existingEvent == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(eventDto, existingEvent); 
+            _unitOfWork.Event.Update(existingEvent);
             await _unitOfWork.Save();
-            return Ok(result);
+
+            return Ok(existingEvent); 
         }
+
+
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
