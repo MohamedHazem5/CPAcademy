@@ -41,6 +41,43 @@
             .ForMember(dest => dest.Lectures, src => src.Ignore())
             .ForMember(dest => dest.Course, src => src.Ignore())
             .ForMember(dest => dest.Id, src => src.Ignore());
+
+            CreateMap<Lecture, LecturePostDto>()
+            .ForMember(dest => dest.Time, src => src.Ignore())
+            .ReverseMap()
+            .ForMember(dest => dest.CDate, src => src.Ignore())
+            .ForMember(dest => dest.Progresses, src => src.Ignore())
+            .ForMember(dest => dest.Discussions, src => src.Ignore())
+            .ForMember(dest => dest.Notes, src => src.Ignore())
+            .ForMember(dest => dest.Section, src => src.Ignore())
+            .ForMember(dest => dest.Id, src => src.Ignore());
+
+            CreateMap<Lecture, LecturePutDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.CDate, src => src.Ignore())
+            .ForMember(dest => dest.Progresses, src => src.Ignore())
+            .ForMember(dest => dest.Discussions, src => src.Ignore())
+            .ForMember(dest => dest.Notes, src => src.Ignore())
+            .ForMember(dest => dest.Section, src => src.Ignore());
+
+            CreateMap<Video, VideoPutDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.Lecture, src => src.Ignore());
+
+            CreateMap<Video, VideoPostDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.Id, src => src.Ignore())
+            .ForMember(dest => dest.Lecture, src => src.Ignore());
+
+            CreateMap<Article, ArticlePutDto>()
+           .ReverseMap()
+           .ForMember(dest => dest.Lecture, src => src.Ignore());
+
+            CreateMap<Article, ArticlePostDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.Id, src => src.Ignore())
+            .ForMember(dest => dest.Lecture, src => src.Ignore());
         }
     }
+
 }
