@@ -21,9 +21,14 @@ namespace CPAcademy.DataAccess.Repository
             await _dbSet.AddRangeAsync(entities);
             return entities;
         }
-        public async Task<int> CountAsync(Expression<Func<T, bool>> filter)
+        public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
         {
-            return await (filter != null? _dbSet.CountAsync(filter) : _dbSet.CountAsync());
+            return await (filter != null ? _dbSet.CountAsync(filter) : _dbSet.CountAsync());
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null)
+        {
+            return await (filter != null ? _dbSet.AnyAsync(filter) : _dbSet.AnyAsync());
         }
 
         public T Delete(T entity)

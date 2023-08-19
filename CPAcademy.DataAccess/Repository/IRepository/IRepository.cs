@@ -4,11 +4,13 @@ namespace CPAcademy.DataAccess.Repository.IRepository
     {
         Task<T> AddAsync(T entity);
         Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
-        Task<int> CountAsync(Expression<Func<T, bool>> filter);
+        Task<int> CountAsync(Expression<Func<T, bool>> filter = null);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> filter = null);
         T Delete(T entity);
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] includeProperties);
         Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] includeProperties);
         T Update(T entity);
         IEnumerable<T> UpdateRange(IEnumerable<T> entities);
+
     }
 }
