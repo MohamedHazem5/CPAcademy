@@ -79,6 +79,28 @@
             .ReverseMap()
             .ForMember(dest => dest.Id, src => src.Ignore())
             .ForMember(dest => dest.Lecture, src => src.Ignore());
+
+
+            CreateMap<Question, QuestionPostDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.Id, src => src.Ignore())
+            .ForMember(dest => dest.Choices, src => src.Ignore())
+            .ForMember(dest => dest.Quiz, src => src.Ignore());
+
+            CreateMap<Question, QuestionPutDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.Choices, src => src.Ignore())
+            .ForMember(dest => dest.Quiz, src => src.Ignore());
+
+            CreateMap<Choice, ChoicePostDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.Id, src => src.Ignore())
+            .ForMember(dest => dest.Question, src => src.Ignore());
+
+            CreateMap<Choice, ChoicePutDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.Question, src => src.Ignore());
+
         }
     }
 
