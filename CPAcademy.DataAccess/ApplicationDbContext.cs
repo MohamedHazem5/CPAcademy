@@ -27,6 +27,11 @@
              .WithMany()
              .HasForeignKey(x => x.LearnerId)
              .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Enroll>()
+                .HasOne(x => x.Learner)
+                 .WithMany()
+                 .HasForeignKey(x => x.LearnerId)
+                 .OnDelete(DeleteBehavior.NoAction);
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Blog> Blogs { get; set; }
