@@ -22,6 +22,7 @@
             CreateMap<Blog, BlogDto>().ReverseMap();
             CreateMap<Event, EventDto>().ReverseMap();
             CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<Enroll, EnrollDto>().ReverseMap();
 
 
 
