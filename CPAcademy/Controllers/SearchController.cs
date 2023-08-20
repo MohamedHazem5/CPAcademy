@@ -9,7 +9,7 @@
         {
             _unitOfWork = unitOfWork;
         }
-        [HttpGet]
+        [HttpGet("ByKeyword")]
         public async Task<ActionResult> ByKeyword(string name) 
         {
             var courses =await _unitOfWork.Course.GetAllAsync(c=>c.Title.ToLower().Contains(name.ToLower()) || c.About.ToLower()
@@ -18,7 +18,7 @@
             return courses == null? NotFound() : Ok(courses);
         }
 
-        [HttpGet]
+        [HttpGet("ByCategoryName")]
         public async Task<ActionResult> ByCategoryName(string categoryName)
         {
             var categories = await _unitOfWork.Category.GetAllAsync(c => c.Name.ToLower().Contains(categoryName.ToLower()));
@@ -31,7 +31,7 @@
             return courses == null ? NotFound() : Ok(courses);
         }
 
-        [HttpGet]
+        [HttpGet("ByTopicName")]
         public async Task<ActionResult> ByTopicName(string TopicName)
         {
             var topics = await _unitOfWork.Category.GetAllAsync(c => c.Name.ToLower().Contains(TopicName.ToLower()));
