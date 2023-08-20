@@ -15,7 +15,7 @@ namespace CPAcademy.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        [HttpGet]
+        [HttpGet("GetEnrollCoursesByUser")]
         public async Task<IActionResult> GetEnrollCoursesByUser(int id)
         {
             var user = await _unitOfWork.Enroll.GetAllAsync(x => x.LearnerId == id, c => c.Course);
