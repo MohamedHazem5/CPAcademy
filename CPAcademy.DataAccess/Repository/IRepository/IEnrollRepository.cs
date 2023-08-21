@@ -4,6 +4,7 @@ namespace CPAcademy.DataAccess.Repository.IRepository
 {
     public interface IEnrollRepository : IRepository<Enroll>
     {
-        Task<Enroll> CreateOrder(EnrollDto orderDto);
+        Task<bool> CheckCourse(int courseId, int userId);
+        
     }
 }

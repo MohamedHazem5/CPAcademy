@@ -29,6 +29,7 @@ namespace CPAcademy.DataAccess.Repository.IRepository
         ITopicRepository Topic { get; }
         IUserRepository User { get; }
         IVideoRepository Video { get; }
+        IOrderRepository Order { get; }
 
         Task<int> Save();
         

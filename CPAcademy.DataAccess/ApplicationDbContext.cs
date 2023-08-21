@@ -32,6 +32,11 @@
                  .WithMany()
                  .HasForeignKey(x => x.LearnerId)
                  .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Order>()
+                    .HasOne(x => x.User)
+                     .WithMany()
+                     .HasForeignKey(x => x.UserId)
+                     .OnDelete(DeleteBehavior.NoAction);
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Blog> Blogs { get; set; }
@@ -60,6 +65,7 @@
         public DbSet<Topic> Topics { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Video> Videos { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
     }
 }

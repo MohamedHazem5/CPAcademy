@@ -30,6 +30,7 @@ namespace CPAcademy.DataAccess.Repository
         public ITopicRepository Topic { get; private set; }
         public IUserRepository User { get; private set; }
         public IVideoRepository Video { get; private set; }
+        public IOrderRepository Order { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -61,6 +62,7 @@ namespace CPAcademy.DataAccess.Repository
             Topic = new TopicRepository(_context);
             User = new UserRepository(_context);
             Video = new VideoRepository(_context);
+            Order = new OrderRepository(_context);
         }
 
         public void Dispose()
