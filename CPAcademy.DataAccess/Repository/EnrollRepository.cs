@@ -9,22 +9,17 @@ namespace CPAcademy.DataAccess.Repository.IRepository
         {
             _context = context;
         }
-        public async Task<Enroll> CreateOrder(EnrollDto orderDto)
+        public async Task<bool> CheckCourse(int courseId, int userId)
         {
+            var result = await _context.Enrolls.FirstOrDefaultAsync(x => x.CourseId == courseId && x.LearnerId == userId);
 
-
-            var order = new Enroll
+            if (result == null)
             {
-                LearnerId = orderDto.LearnerId,
-                Price = orderDto.Price,
-                CourseId = orderDto.CourseId,
-            };
-
-            await _context.Enrolls.AddAsync(order);
-            await _context.SaveChangesAsync();
-
-            return order;
-
+                return false;
+            }
+            return true;
         }
+
+
     }
 }

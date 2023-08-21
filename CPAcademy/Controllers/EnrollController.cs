@@ -1,5 +1,5 @@
 ﻿using CPAcademy.Models;
-
+using CPAcademy.Models.DTO;
 using Stripe.Checkout;
 
 namespace CPAcademy.Controllers
@@ -22,8 +22,14 @@ namespace CPAcademy.Controllers
 
             return Ok(user);
         }
+        [HttpGet("GetOrderByUser")]
+        public async Task<IActionResult> GetOrderByUser(int id)
+        {
+            var user = await _unitOfWork.Order.GetAllAsync(x => x.UserId == id, c => c.Course);
 
-        [HttpPost]
+            return Ok(user);
+        }
+/*        [HttpPost("BuyOrEnrollCourse")]
         public async Task<IActionResult> BuyOrEnrollCourse(EnrollDto enrollDto)
         {
             if (!ModelState.IsValid)
@@ -58,14 +64,33 @@ namespace CPAcademy.Controllers
 
             // Return a success response
             return Ok("Enrollment created successfully.");
-        }
+        }*/
 
-        private async Task<bool> ProcessStripePayment(int learnerId, int courseId)
+
+        [HttpPost("CreateOrder")]
+        public async Task<IActionResult> CreateOrder(OrderDto orderDto)
         {
+            bool flag = await _unitOfWork.Enroll.CheckCourse(orderDto.CourseId, orderDto.UserId);
 
-
-            if (ModelState.IsValid)
+            if (flag)
             {
+                return BadRequest("User Already bought the course");
+            }
+            var order = await _unitOfWork.Order.CreateOrder(orderDto);
+
+            var result = new Enroll
+            {
+                CourseId = orderDto.CourseId,
+                LearnerId = orderDto.UserId,
+            };
+
+            var course = await _unitOfWork.Course.GetFirstOrDefaultAsync(x => x.Id == orderDto.CourseId);
+
+            await _unitOfWork.Enroll.AddAsync(result);
+
+            await _unitOfWork.Save();
+
+
             //stripe settings
             var domain = "http://127.0.0.1:5500/test.html";
             var options = new SessionCreateOptions
@@ -84,11 +109,12 @@ namespace CPAcademy.Controllers
             {
                 PriceData = new SessionLineItemPriceDataOptions
                 {
-                    /*UnitAmount = (long)(order.Price * 100),//20.00 -> 2000*/
+                    UnitAmount = (long)(order.Price * 100),//20.00 -> 2000
                     Currency = "usd",
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {
-                        /*Name = course.Title,*/
+                        Name = course.Title,
+                        
                     },
                 },
                 Quantity = 1,
@@ -100,13 +126,7 @@ namespace CPAcademy.Controllers
             Session session = service.Create(options);
 
             Response.Headers.Add("Location", session.Url);
-
-            return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new StatusCodeResult(303);
 
         }
 
