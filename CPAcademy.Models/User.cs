@@ -12,6 +12,7 @@ namespace CPAcademy.Models
         public string  City { get; set; } // change on UI
         public string ImgURL { get; set; }
         public DateTime CDate { get; set; } = DateTime.Now;
+        public DateTime DataofBirth { get; set; }
         public Photo Photo { get; set; } 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Enroll> Enrolls { get; set; }
