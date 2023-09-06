@@ -16,7 +16,7 @@ namespace CPAcademy.Controllers
         [HttpPost("send")]
         public async Task<IActionResult> SendMail([FromForm] EmailRequestDto dto)  // because we have attachments so we need be fromForm
         {
-            await _mailService.SendEmailAsync(dto.ToEmail, dto.Subject, dto.Body;
+            await _mailService.SendEmailAsync(dto.ToEmail, dto.Subject, dto.Body);
             return Ok();
         }
 
