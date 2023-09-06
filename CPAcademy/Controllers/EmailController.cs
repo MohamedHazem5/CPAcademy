@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPAcademy.Controllers
 {
-
     public class EmailController : BaseAPIController
     {
         private readonly IMailService _mailService;
@@ -13,10 +12,11 @@ namespace CPAcademy.Controllers
         {
             _mailService = mailService;
         }
+
         [HttpPost("send")]
         public async Task<IActionResult> SendMail([FromForm] EmailRequestDto dto)  // because we have attachments so we need be fromForm
         {
-            await _mailService.SendEmailAsync(dto.ToEmail, dto.Subject,dto.Body,dto.Attachments);
+            await _mailService.SendEmailAsync(dto.ToEmail, dto.Subject, dto.Body);
             return Ok();
         }
 
@@ -25,7 +25,7 @@ namespace CPAcademy.Controllers
         {
             var filepath = $"{Directory.GetCurrentDirectory()}\\Template\\index.html";
             var str = new StreamReader(filepath);
-            var mailText=str.ReadToEnd();
+            var mailText = str.ReadToEnd();
             str.Close();
 
             mailText = mailText.Replace("[Our Services]", subscribeDto.UserName);
