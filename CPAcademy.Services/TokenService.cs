@@ -4,6 +4,7 @@
     {
         private readonly SymmetricSecurityKey _key;
         private readonly UserManager<User> _userManager;
+
         public TokenService(IConfiguration config, UserManager<User> userManager)
         {
             _userManager = userManager;
@@ -15,7 +16,7 @@
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                new Claim("email", user.Email),
             };
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -36,6 +37,16 @@
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public string DataFromToken(string token, Func<Claim, bool> selector)
+        {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(token);
+
+            var data = jwtToken.Claims.FirstOrDefault(selector)?.Value;
+
+            return data;
         }
     }
 }

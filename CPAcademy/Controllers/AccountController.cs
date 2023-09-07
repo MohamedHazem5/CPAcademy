@@ -1,6 +1,7 @@
-﻿namespace CPAcademy.Controllers
-{
+﻿using CPAcademy.Models;
 
+namespace CPAcademy.Controllers
+{
     public class AccountController : BaseAPIController
     {
         private readonly UserManager<User> _userManager;
@@ -14,22 +15,38 @@
             _mailService = mailService;
         }
 
+        [HttpGet()]
+        public async Task<ActionResult> Index([FromQuery] string token)
+        {
+            var email = _tokenService.DataFromToken(token, t => t.Type == "email");
+            var user = await _userManager.FindByEmailAsync(email);
+            return Ok(new UserDto
+            {
+                Email = user.Email,
+                ImgURL = user.ImgURL,
+                Gender = user.Gender,
+                Bio = user.Bio,
+                DataofBirth = user.DataofBirth,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Location = user.City,
+                PhoneNumber = user.PhoneNumber,
+                Token = token,
+            });
+        }
+
         [HttpPost("register")] // POST: api/account/register?username=dave&password=pwd
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+            if (await UserExists(registerDto.Email)) return BadRequest("Email is Already Exist");
 
             var user = new User
             {
-                UserName = registerDto.Username,
+                UserName = registerDto.Email,
                 Email = registerDto.Email,
-                City = registerDto.City,
                 FirstName = registerDto.FirstName,
                 LastName = registerDto.LastName,
-                Gender = registerDto.Gender,
             };
-
-            user.UserName = registerDto.Username.ToLower();
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
@@ -42,32 +59,72 @@
             return new UserDto
             {
                 Token = await _tokenService.CreateToken(user),
-                Username = user.UserName,
+                Email = user.Email,
                 Gender = user.Gender
             };
         }
-
-        
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.Users
                 .Include(p => p.Photo)
-                .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+                .SingleOrDefaultAsync(x => x.UserName == loginDto.Email);
 
-            if (user == null) return Unauthorized("invalid username");
+            if (user == null) return Unauthorized("invalid email or password");
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
-            if (!result) return Unauthorized("Invalid password");
+            if (!result) return Unauthorized("invalid email or password");
 
             return new UserDto
             {
-                Username = user.UserName,
+                Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 ImgURL = user.ImgURL,
-                Gender = user.Gender
+                Gender = user.Gender,
+                Bio = user.Bio,
+                DataofBirth = user.DataofBirth,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Location = user.City,
+                PhoneNumber = user.PhoneNumber
+            };
+        }
+
+        [HttpPost("Edit")]
+        public async Task<ActionResult<UserDto>> Edit(UserEditDto dto)
+        {
+            var user = await _userManager.FindByEmailAsync(dto.Email);
+            if (user is null)
+            {
+                return NotFound(new { success = false, message = "NotFound" });
+            }
+
+            user.PhoneNumber = dto.PhoneNumber;
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.Bio = dto.Bio;
+            user.City = dto.Location;
+            user.Gender = dto.Gender;
+            user.DataofBirth = dto.DataofBirth;
+            user.ImgURL = dto.ImgURL;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+            return new UserDto
+            {
+                Email = user.Email,
+                Token = await _tokenService.CreateToken(user),
+                ImgURL = user.ImgURL,
+                Gender = user.Gender,
+                Bio = user.Bio,
+                DataofBirth = user.DataofBirth,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Location = user.City,
+                PhoneNumber = user.PhoneNumber
             };
         }
 
@@ -93,7 +150,6 @@
             return BadRequest();
         }
 
-        
         [HttpPost]
         [Route("ResetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
@@ -135,7 +191,6 @@
             }
             return BadRequest(model);
         }
-
 
         private async Task<bool> UserExists(string username)
         {
