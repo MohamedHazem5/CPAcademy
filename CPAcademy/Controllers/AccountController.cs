@@ -1,4 +1,6 @@
 ﻿using CPAcademy.Models;
+using Newtonsoft.Json.Linq;
+using Stripe;
 
 namespace CPAcademy.Controllers
 {
@@ -22,6 +24,7 @@ namespace CPAcademy.Controllers
             var user = await _userManager.FindByEmailAsync(email);
             return Ok(new UserDto
             {
+                Id = user.Id,
                 Email = user.Email,
                 ImgURL = user.ImgURL,
                 Gender = user.Gender,
@@ -36,7 +39,7 @@ namespace CPAcademy.Controllers
         }
 
         [HttpPost("register")] // POST: api/account/register?username=dave&password=pwd
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        public async Task<ActionResult> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.Email)) return BadRequest("Email is Already Exist");
 
@@ -56,12 +59,14 @@ namespace CPAcademy.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            return new UserDto
+            return Ok(new StanderUserDto
             {
-                Token = await _tokenService.CreateToken(user),
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Email = user.Email,
-                Gender = user.Gender
-            };
+                Token = await _tokenService.CreateToken(user),
+            });
         }
 
         [HttpPost("login")]
@@ -79,6 +84,7 @@ namespace CPAcademy.Controllers
 
             return new UserDto
             {
+                Id = user.Id,
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 ImgURL = user.ImgURL,
@@ -115,6 +121,7 @@ namespace CPAcademy.Controllers
                 return BadRequest(result.Errors);
             return new UserDto
             {
+                Id = user.Id,
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 ImgURL = user.ImgURL,
